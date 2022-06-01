@@ -1,20 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import * as React from 'react';
+import { Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto'
+import { WorkSans_500Medium, WorkSans_600SemiBold, WorkSans_700Bold } from '@expo-google-fonts/work-sans'
+
+import theme from './src/styles/theme';
+
+import { Home } from './src/screens/Home';
+import { ThemeProvider } from 'styled-components';
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_500Medium,
+    Roboto_700Bold,
+    WorkSans_500Medium,
+    WorkSans_600SemiBold,
+    WorkSans_700Bold
+  });
+
+  if (!fontsLoaded) return <Text>Carregando ...</Text>;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{
+          headerShown: false,
+        }}>
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
