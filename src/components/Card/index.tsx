@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
-import { Container } from './styles';
+import React from 'react';
+import { Image } from 'react-native';
+import * as Component from './styles';
 
-interface RepositoryProps {
-  id: number,
-  full_name: string;
-  owner: {
-    avatar_url: string;
-  };
+export interface DataProps {
+  id: string;
+  image_url: string;
+  repository: string;
   description: string;
-  forks_count: number;
-  stargazers_count: number;
-  issues: IssueProps[]
-  issues_url: string;
-  open_issues_count: number;
 }
 
-export function Card({ data }) {
+export function Card({ data }: DataProps) {
   return (
-    <Container>
-    </Container>
+    <Component.Container>
+      <Component.RepositoryIcon
+        source={{ uri: data.image_url }}
+      />
+      <Component.TextContainer>
+        <Component.Title>{data.repository}</Component.Title>
+        <Component.SubTitle>{data.description}</Component.SubTitle>
+      </Component.TextContainer>
+    </Component.Container>
   );
 }
+

@@ -1,32 +1,56 @@
 import React, { useState } from 'react';
-import { StatusBar, Text } from 'react-native';
-import { useFonts, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto'
-import { WorkSans_500Medium, WorkSans_600SemiBold, WorkSans_700Bold } from '@expo-google-fonts/work-sans'
-
-import AppLoading from 'expo-app-loading';
-
+import { Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback, View } from 'react-native';
 import GithubSVG from '../../assets/icon-header.svg';
 import { SearchInput } from '../../components/Input/Search';
 
 import { Container, Header } from './styles';
-import theme from '../../styles/theme';
-import { ThemeProvider } from 'styled-components';
+
+import { Card, DataProps } from '../../components/Card';
+import { api } from '../../service/api';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
+const newData: DataProps = {
+  id: "id_21nj3ds",
+  image_url: "https://avatars.githubusercontent.com/u/69631?v=4",
+  repository: 'facebook/react',
+  description:
+    "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+}
 
 export function Home() {
   const [search, setSearch] = useState();
+  const [data, setData] = useState(undefined);
+
+  async function handleFindRepository(search) {
+    try {
+      const request = await api.get(`/repos/${search}`)
+      console.log(request)
+      setData(request)
+    } catch (error) {
+      console.log(error.mesage)
+    }
+  }
 
   return (
-    <Container>
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="dark-content"
-        translucent
-      />
-      <Header>
-        <GithubSVG width={40} height={40} />
-      </Header>
+    <KeyboardAvoidingView behavior='position' enabled>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <SearchInput />
-    </Container>
+        <Container>
+
+          <StatusBar
+            backgroundColor="transparent"
+            barStyle="dark-content"
+            translucent
+          />
+
+          <Header>
+            <GithubSVG width={40} height={40} />
+          </Header>
+
+          <SearchInput />
+          <Card data={newData} />
+        </Container>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }

@@ -4,7 +4,7 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 
 
 export const Container = styled.View`
-  margin-top: ${RFValue(54)}px;
+  margin-top: ${RFValue(38)}px;
 `;
 
 export const HeaderText = styled.Text`

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
 import { useTheme } from 'styled-components';
 import * as Component from './styles';
@@ -7,6 +8,7 @@ export function SearchInput() {
   const theme = useTheme()
 
   return (
+
     <Component.Container>
       <Component.HeaderText>Search</Component.HeaderText>
       <Component.Wrapper>
@@ -20,7 +22,4 @@ export function SearchInput() {
       </Component.Wrapper>
     </Component.Container>
   );
-}
-
-export function Search() {
 }
